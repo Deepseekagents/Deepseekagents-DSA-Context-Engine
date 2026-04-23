@@ -5,9 +5,8 @@ The Cognitive Architecture for AI Agents. Infinite Context. Perfect Recall. Zero
 
 **The Cognitive Architecture for AI Agents.***Infinite Context. Perfect Recall. Zero Hallucinations.*
 
-```html
-<div align="center">
-&#x20; 
+```
+ 
 [![NPM Version](https://img.shields.io/npm/v/dsa-context-engine?style=flat-square&color=blue)](https://www.npmjs.com/package/dsa-context-engine)
 [![Bun](https://img.shields.io/badge/runtime-Bun-black?style=flat-square&logo=bun)](https://bun.sh)
 [![FalkorDB](https://img.shields.io/badge/graph-FalkorDB-orange?style=flat-square)](https://www.falkordb.com)
@@ -18,7 +17,7 @@ The Cognitive Architecture for AI Agents. Infinite Context. Perfect Recall. Zero
 [![Try Cloud](https://img.shields.io/badge/☁️_Try_DSA_Cloud-Free_Trial-green?style=flat-square)](https://deepseekagents.com/enterprise)
 ```
 
-**Built by&#x20;****[DeepSeekAgents](https://github.com/deepseekagents)** · **For Agents That Need to Remember**
+Built by&#x20;**[DeepSeekAgents](https://github.com/deepseekagents)** · **For Agents That Need to Remember**
 
 [📚 Documentation](https://docs.deepseekagents.com) • [⚡ Quick Start](#-quickstart-give-your-agent-a-brain-today) • [🏢 Enterprise](#-dsa-cloud--managed-agentic-memory) • [🌟 Star Us](https://github.com/deepseekagents/dsa-context-engine)
 
