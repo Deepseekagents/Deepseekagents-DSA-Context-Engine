@@ -346,14 +346,6 @@ Security:     Local mode is 100% air‑gapped – your code never leaves your ma
 
 ***
 
-## 📈 Roadmap
-
-| Quarter | Focus                                                       |
-| ------- | ----------------------------------------------------------- |
-| Q2 2025 | Core engine, AST listener, MCP server, open‑source Git sync |
-| Q3 2025 | DSA Cloud private beta, enterprise dashboards, RBAC         |
-| Q4 2025 | VS Code extension, CI/CD integrations, SOC2 certification   |
-| Q1 2026 | Autonomous agent workflows, predictive unblocking, GraphRAG |
 
 ***
 
