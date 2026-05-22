@@ -21,6 +21,10 @@ Built by&#x20;**[DeepSeekAgents](https://github.com/deepseekagents)** · **For A
 
 [📚 Documentation](https://docs.deepseekagents.com) • [⚡ Quick Start](#-quickstart-give-your-agent-a-brain-today) • [🏢 Enterprise](#-dsa-cloud--managed-agentic-memory) • [🌟 Star Us](https://github.com/deepseekagents/dsa-context-engine)
 
+**Give your agent Infinite Context. Perfect Recall. Zero Hallucinations.**
+
+Install DSA for **Claude Code**, **Codex CLI**, **Codex App**, **Factory Droid**, **Gemini CLI**, **OpenCode**, **Cursor**, and **GitHub Copilot CLI**.
+
 ```html
 </div>
 ```
@@ -115,6 +119,8 @@ A real-time, WebAssembly-powered AST listener using [Tree-sitter](https://tree-s
 * **Stable Symbol IDs** like `src/auth.py::AuthService.login#method` – agents can reference the same function forever, even as code changes.
 * **Byte‑Offset Retrieval** – fetch only the exact lines of a function (O(1)), not the whole file.
 * **Context Providers** – automatically detect tools like dbt, Terraform, OpenAPI and enrich nodes with business metadata (descriptions, tags, column names).
+* **Impact‑Aware Code Context** – inspect a symbol's callers, callees, imports, related tasks, and decision history before a change spreads.
+* **Git Diff Impact** – map changed symbols to upstream code paths, open tasks, and relevant episodes while the local index reports freshness.
 * **Token Savings Meter** – every MCP response reports how many tokens and dollars you saved compared to reading entire files. Cumulative totals let you see your ROI in real time.
 
 All of this is enriched with semantic summaries using an **ultra-cheap LLM waterfall**:
@@ -143,6 +149,7 @@ Powered by [Graphiti MCP](https://github.com/getzep/graphiti), this layer ingest
 | **Instant context loading**     | Agent loads full project memory in <50ms                            | FalkorDB sub‑ms queries     |
 | **Real‑time AST updates**       | File saves update graph in <10ms                                    | web-tree-sitter + chokidar  |
 | **Token‑efficient retrieval**   | Fetch only the exact function you need – **up to 99% fewer tokens** | Byte‑offset + stable IDs    |
+| **Impact-aware changes**        | See callers, callees, tasks, and memories touched by a diff         | AST graph + Git diff        |
 | **MCP‑native**                  | Works with any MCP client out of the box                            | stdio + HTTP transports     |
 | **100% air‑gapped local mode**  | Your code never leaves your machine                                 | Local FalkorDB + file cache |
 
@@ -160,6 +167,8 @@ Powered by [Graphiti MCP](https://github.com/getzep/graphiti), this layer ingest
 | Feature                  | Benefit                                                                          | Tech                   |
 | ------------------------ | -------------------------------------------------------------------------------- | ---------------------- |
 | **Full MCP toolset**     | Call `list_tasks`, `search_memory`, `get_symbol_source` directly from your agent | MCP server             |
+| **Blast-radius context** | Check upstream/downstream code impact before changing a symbol                 | Graph traversal        |
+| **Freshness warnings**   | Warn the agent when Git checkout or file changes are still re-indexing         | Local proxy + watcher  |
 | **Auto‑task unblocking** | AST changes automatically mark dependent tasks as unblocked                      | Graph triggers         |
 | **Temporal search**      | Search across time: *"What did we decide about the API last month?"*             | Graphiti hybrid search |
 | **Savings meter**        | Every response includes `_meta` with tokens saved and cost avoided               | Built‑in token counter |
@@ -202,20 +211,76 @@ This spins up FalkorDB, creates `.dsa/journal.jsonl`, and starts the AST watcher
 
 ### 2. Connect Your Agent
 
-**For Claude Code / OpenCode CLI:**
+DSA runs as a local stdio MCP server:
 
 ```shellscript
-claude -m "bunx dsa mcp"
+bunx dsa mcp
 ```
 
-**For VS Code / Cursor:**
+Use the same server command in your coding tool.
 
-Add to `.vscode/settings.json`:
+**Claude Code**
+
+```shellscript
+claude mcp add dsa -- bunx dsa mcp
+```
+
+**Codex CLI and Codex App**
+
+Add DSA to Codex with the CLI. The MCP entry is written to the Codex configuration profile used by Codex local surfaces that load `~/.codex/config.toml`.
+
+```shellscript
+codex mcp add dsa -- bunx dsa mcp
+```
+
+**Factory Droid**
+
+Add DSA to `~/.factory/mcp.json` for personal use or `.factory/mcp.json` for project-shared configuration:
 
 ```json
 {
-  "mcp.servers": {
-    "dsa-memory": {
+  "mcpServers": {
+    "dsa": {
+      "type": "stdio",
+      "command": "bunx",
+      "args": ["dsa", "mcp"],
+      "disabled": false
+    }
+  }
+}
+```
+
+**Gemini CLI**
+
+```shellscript
+gemini mcp add dsa bunx dsa mcp
+```
+
+**OpenCode**
+
+Add DSA under `mcp` in `opencode.json`:
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "dsa": {
+      "type": "local",
+      "command": ["bunx", "dsa", "mcp"],
+      "enabled": true
+    }
+  }
+}
+```
+
+**Cursor**
+
+Add DSA to `.cursor/mcp.json` for the project or `~/.cursor/mcp.json` globally:
+
+```json
+{
+  "mcpServers": {
+    "dsa": {
       "command": "bunx",
       "args": ["dsa", "mcp"]
     }
@@ -223,7 +288,24 @@ Add to `.vscode/settings.json`:
 }
 ```
 
-**For Any MCP Client:**
+**GitHub Copilot CLI**
+
+Open Copilot CLI and run `/mcp add`, then choose a local stdio server with command `bunx` and arguments `dsa mcp`. To configure it directly, add DSA to `~/.copilot/mcp-config.json`:
+
+```json
+{
+  "mcpServers": {
+    "dsa": {
+      "type": "local",
+      "command": "bunx",
+      "args": ["dsa", "mcp"],
+      "tools": ["*"]
+    }
+  }
+}
+```
+
+**Any MCP Client**
 
 ```shellscript
 bunx dsa mcp  # Runs stdio MCP server
@@ -396,5 +478,3 @@ The full source code is available under the non‑commercial license. Commercial
 ```html
 </div>
 ```
-
-
