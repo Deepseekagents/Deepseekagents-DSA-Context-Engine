@@ -31,7 +31,7 @@ Built by&#x20;**[DeepSeekAgents](https://github.com/deepseekagents)** · **For A
 </div>
 ```
 
-> **Stop pasting the same context into Cursor over and over.**&#x47;ive your AI permanent memory—tasks, code structure, and conversations—all in one blazing‑fast graph.
+> **Stop pasting the same context into Cursor over and over.**&#x47;ive your AI permanent memory—tasks, code structure, and conversations—all in one blazing‑fast graph..
 
 ***
 
